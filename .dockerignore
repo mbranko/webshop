@@ -1,0 +1,4 @@
+*.pyc
+__pycache__
+Dockerfile
+frontend/node_modules

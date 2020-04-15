@@ -1,0 +1,631 @@
+- model: contenttypes.contenttype
+  pk: 1
+  fields:
+    app_label: admin
+    model: logentry
+- model: contenttypes.contenttype
+  pk: 2
+  fields:
+    app_label: auth
+    model: permission
+- model: contenttypes.contenttype
+  pk: 3
+  fields:
+    app_label: auth
+    model: group
+- model: contenttypes.contenttype
+  pk: 4
+  fields:
+    app_label: auth
+    model: user
+- model: contenttypes.contenttype
+  pk: 5
+  fields:
+    app_label: contenttypes
+    model: contenttype
+- model: contenttypes.contenttype
+  pk: 6
+  fields:
+    app_label: sessions
+    model: session
+- model: contenttypes.contenttype
+  pk: 7
+  fields:
+    app_label: mainshop
+    model: category
+- model: contenttypes.contenttype
+  pk: 8
+  fields:
+    app_label: mainshop
+    model: customer
+- model: contenttypes.contenttype
+  pk: 9
+  fields:
+    app_label: mainshop
+    model: product
+- model: contenttypes.contenttype
+  pk: 10
+  fields:
+    app_label: mainshop
+    model: shoppingcart
+- model: contenttypes.contenttype
+  pk: 11
+  fields:
+    app_label: mainshop
+    model: supplier
+- model: contenttypes.contenttype
+  pk: 12
+  fields:
+    app_label: mainshop
+    model: shoppingcartitem
+- model: sessions.session
+  pk: 2oucalc2allevmeale97josg1d7bp83z
+  fields:
+    session_data: N2EwZTUxNGQwOGQ2ZDgwNDZmYTY5MzVmM2YzN2U5NGUwNTMxNmMxZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoid2Vic2hvcC5hdXRoLkVtYWlsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6ImE3Y2FjNjRkYmE2Y2UzMmI5YWIwY2Q2MzJmNjFmMzk3MzRhOGVkMzYifQ==
+    expire_date: 2020-04-27 11:42:43.427998+00:00
+- model: sessions.session
+  pk: a1tvy6tbqxagn5akmpwoao1juxcyhvu4
+  fields:
+    session_data: N2EwZTUxNGQwOGQ2ZDgwNDZmYTY5MzVmM2YzN2U5NGUwNTMxNmMxZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoid2Vic2hvcC5hdXRoLkVtYWlsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6ImE3Y2FjNjRkYmE2Y2UzMmI5YWIwY2Q2MzJmNjFmMzk3MzRhOGVkMzYifQ==
+    expire_date: 2020-04-27 17:09:26.350995+00:00
+- model: mainshop.category
+  pk: 1
+  fields:
+    name: "Ra\u010Dunari"
+    parent: null
+- model: mainshop.category
+  pk: 2
+  fields:
+    name: Komponente
+    parent: null
+- model: mainshop.category
+  pk: 3
+  fields:
+    name: Desktop
+    parent: 1
+- model: mainshop.category
+  pk: 4
+  fields:
+    name: Laptop
+    parent: 1
+- model: mainshop.category
+  pk: 5
+  fields:
+    name: Server
+    parent: 1
+- model: mainshop.category
+  pk: 6
+  fields:
+    name: "Mati\u010Dne plo\u010De"
+    parent: 2
+- model: mainshop.category
+  pk: 7
+  fields:
+    name: Procesori
+    parent: 2
+- model: mainshop.supplier
+  pk: 1
+  fields:
+    name: "\u017Dika Trade d.o.o."
+    address: "Mar\u0161ala Tita 1"
+    city: Novi Sad
+    zip_code: '21000'
+- model: mainshop.supplier
+  pk: 2
+  fields:
+    name: Laza Export-Import d.o.o
+    address: Trg neznanog junaka 1
+    city: Novi Sad
+    zip_code: '21000'
+- model: mainshop.product
+  pk: 1
+  fields:
+    name: X1 Carbon Gen 7
+    vendor: Lenovo
+    category: 4
+    supplier: 1
+    description: "- Slimmer, sleeker and lighter version\r\n- Up to 18.3-hour of battery
+      life\r\n- Built-in suite of ThinkShield security features\r\n- Intel\xAE Core\u2122
+      technology for high performance\r\n- Enhanced audio for ultimate surround sound\r\n-
+      An optional carbon-fiber weave top cover available"
+    price: '1650.00'
+    available_quantity: 10
+- model: mainshop.product
+  pk: 2
+  fields:
+    name: XPS 15 7590
+    vendor: Dell
+    category: 4
+    supplier: 1
+    description: "The world\u2019s smallest 15.6-inch performance laptop with a stunning
+      OLED display option. Now featuring 9th Gen Intel\xAE Core\u2122 processors."
+    price: '1450.00'
+    available_quantity: 7
+- model: mainshop.product
+  pk: 3
+  fields:
+    name: MacBook Pro 16
+    vendor: Apple
+    category: 4
+    supplier: 1
+    description: "- 2.3GHz 8\u2011core Intel Core i9, Turbo Boost up to 4.8GHz, with
+      16MB shared L3 cache, Configurable to 2.4GHz 8\u2011core Intel Core i9, Turbo
+      Boost up to 5.0GHz, with 16MB shared L3 cache\r\n- 1TB SSD, Configurable to
+      2TB, 4TB, or 8TB SSD\r\n- AMD Radeon Pro 5500M with 4GB of GDDR6 memory and
+      automatic graphics switching\r\n- Intel UHD Graphics 630\r\n- Configurable to
+      AMD Radeon Pro 5500M with 8GB of GDDR6 memory"
+    price: '2650.00'
+    available_quantity: 6
+- model: mainshop.product
+  pk: 4
+  fields:
+    name: PowerEdge R940
+    vendor: Dell
+    category: 5
+    supplier: 2
+    description: "Empower your organization to make the best decisions fast using
+      real-time data and analytics. The PowerEdge R940 supports 50% more NVMe drives
+      than the R930, up to 48 DIMMs (24 of which can be Intel\xAE Optane\u2122 DC
+      persistent memory DCPMMs) and up to 15.36TB of memory*. Make I/O bottlenecks
+      a thing of the past and keep processor utilization at its peak.\r\n\r\nIdeal
+      workloads:\r\n- In-memory and large, complex databases\r\n- Unix to Linux migration\r\n-
+      ERP, CRM\r\n- Dense virtualization"
+    price: '7430.00'
+    available_quantity: 17
+- model: mainshop.product
+  pk: 5
+  fields:
+    name: ThinkSystem SD530
+    vendor: Lenovo
+    category: 5
+    supplier: 2
+    description: "The density of blades, the economics of rack systems\r\n- Modular
+      I/O shuttle design\r\n- Up to 205W processors with Lenovo Neptune Thermal Transfer
+      Module\r\n- SharedIO for improved networking optimization\r\n- Accelerates HPC,
+      AI, and enterprise workloads\r\n- Optional GPU tray supports 2x GPUs per node\r\n-
+      Supported by XClarity Management and LiCO platform"
+    price: '6540.00'
+    available_quantity: 14
+- model: auth.permission
+  pk: 1
+  fields:
+    name: Can add log entry
+    content_type: 1
+    codename: add_logentry
+- model: auth.permission
+  pk: 2
+  fields:
+    name: Can change log entry
+    content_type: 1
+    codename: change_logentry
+- model: auth.permission
+  pk: 3
+  fields:
+    name: Can delete log entry
+    content_type: 1
+    codename: delete_logentry
+- model: auth.permission
+  pk: 4
+  fields:
+    name: Can view log entry
+    content_type: 1
+    codename: view_logentry
+- model: auth.permission
+  pk: 5
+  fields:
+    name: Can add permission
+    content_type: 2
+    codename: add_permission
+- model: auth.permission
+  pk: 6
+  fields:
+    name: Can change permission
+    content_type: 2
+    codename: change_permission
+- model: auth.permission
+  pk: 7
+  fields:
+    name: Can delete permission
+    content_type: 2
+    codename: delete_permission
+- model: auth.permission
+  pk: 8
+  fields:
+    name: Can view permission
+    content_type: 2
+    codename: view_permission
+- model: auth.permission
+  pk: 9
+  fields:
+    name: Can add group
+    content_type: 3
+    codename: add_group
+- model: auth.permission
+  pk: 10
+  fields:
+    name: Can change group
+    content_type: 3
+    codename: change_group
+- model: auth.permission
+  pk: 11
+  fields:
+    name: Can delete group
+    content_type: 3
+    codename: delete_group
+- model: auth.permission
+  pk: 12
+  fields:
+    name: Can view group
+    content_type: 3
+    codename: view_group
+- model: auth.permission
+  pk: 13
+  fields:
+    name: Can add user
+    content_type: 4
+    codename: add_user
+- model: auth.permission
+  pk: 14
+  fields:
+    name: Can change user
+    content_type: 4
+    codename: change_user
+- model: auth.permission
+  pk: 15
+  fields:
+    name: Can delete user
+    content_type: 4
+    codename: delete_user
+- model: auth.permission
+  pk: 16
+  fields:
+    name: Can view user
+    content_type: 4
+    codename: view_user
+- model: auth.permission
+  pk: 17
+  fields:
+    name: Can add content type
+    content_type: 5
+    codename: add_contenttype
+- model: auth.permission
+  pk: 18
+  fields:
+    name: Can change content type
+    content_type: 5
+    codename: change_contenttype
+- model: auth.permission
+  pk: 19
+  fields:
+    name: Can delete content type
+    content_type: 5
+    codename: delete_contenttype
+- model: auth.permission
+  pk: 20
+  fields:
+    name: Can view content type
+    content_type: 5
+    codename: view_contenttype
+- model: auth.permission
+  pk: 21
+  fields:
+    name: Can add session
+    content_type: 6
+    codename: add_session
+- model: auth.permission
+  pk: 22
+  fields:
+    name: Can change session
+    content_type: 6
+    codename: change_session
+- model: auth.permission
+  pk: 23
+  fields:
+    name: Can delete session
+    content_type: 6
+    codename: delete_session
+- model: auth.permission
+  pk: 24
+  fields:
+    name: Can view session
+    content_type: 6
+    codename: view_session
+- model: auth.permission
+  pk: 25
+  fields:
+    name: Can add category
+    content_type: 7
+    codename: add_category
+- model: auth.permission
+  pk: 26
+  fields:
+    name: Can change category
+    content_type: 7
+    codename: change_category
+- model: auth.permission
+  pk: 27
+  fields:
+    name: Can delete category
+    content_type: 7
+    codename: delete_category
+- model: auth.permission
+  pk: 28
+  fields:
+    name: Can view category
+    content_type: 7
+    codename: view_category
+- model: auth.permission
+  pk: 29
+  fields:
+    name: Can add customer
+    content_type: 8
+    codename: add_customer
+- model: auth.permission
+  pk: 30
+  fields:
+    name: Can change customer
+    content_type: 8
+    codename: change_customer
+- model: auth.permission
+  pk: 31
+  fields:
+    name: Can delete customer
+    content_type: 8
+    codename: delete_customer
+- model: auth.permission
+  pk: 32
+  fields:
+    name: Can view customer
+    content_type: 8
+    codename: view_customer
+- model: auth.permission
+  pk: 33
+  fields:
+    name: Can add product
+    content_type: 9
+    codename: add_product
+- model: auth.permission
+  pk: 34
+  fields:
+    name: Can change product
+    content_type: 9
+    codename: change_product
+- model: auth.permission
+  pk: 35
+  fields:
+    name: Can delete product
+    content_type: 9
+    codename: delete_product
+- model: auth.permission
+  pk: 36
+  fields:
+    name: Can view product
+    content_type: 9
+    codename: view_product
+- model: auth.permission
+  pk: 37
+  fields:
+    name: Can add shopping cart
+    content_type: 10
+    codename: add_shoppingcart
+- model: auth.permission
+  pk: 38
+  fields:
+    name: Can change shopping cart
+    content_type: 10
+    codename: change_shoppingcart
+- model: auth.permission
+  pk: 39
+  fields:
+    name: Can delete shopping cart
+    content_type: 10
+    codename: delete_shoppingcart
+- model: auth.permission
+  pk: 40
+  fields:
+    name: Can view shopping cart
+    content_type: 10
+    codename: view_shoppingcart
+- model: auth.permission
+  pk: 41
+  fields:
+    name: Can add supplier
+    content_type: 11
+    codename: add_supplier
+- model: auth.permission
+  pk: 42
+  fields:
+    name: Can change supplier
+    content_type: 11
+    codename: change_supplier
+- model: auth.permission
+  pk: 43
+  fields:
+    name: Can delete supplier
+    content_type: 11
+    codename: delete_supplier
+- model: auth.permission
+  pk: 44
+  fields:
+    name: Can view supplier
+    content_type: 11
+    codename: view_supplier
+- model: auth.permission
+  pk: 45
+  fields:
+    name: Can add shopping cart item
+    content_type: 12
+    codename: add_shoppingcartitem
+- model: auth.permission
+  pk: 46
+  fields:
+    name: Can change shopping cart item
+    content_type: 12
+    codename: change_shoppingcartitem
+- model: auth.permission
+  pk: 47
+  fields:
+    name: Can delete shopping cart item
+    content_type: 12
+    codename: delete_shoppingcartitem
+- model: auth.permission
+  pk: 48
+  fields:
+    name: Can view shopping cart item
+    content_type: 12
+    codename: view_shoppingcartitem
+- model: auth.user
+  pk: 1
+  fields:
+    password: pbkdf2_sha256$180000$p4JA4epiDIvt$3gd1JngwJ0ufLT+w+Gjmj8sSNd/XEGgdpRRxjgoHO1A=
+    last_login: 2020-04-13 17:09:26.334930+00:00
+    is_superuser: true
+    username: branko
+    first_name: ''
+    last_name: ''
+    email: mbranko@uns.ac.rs
+    is_staff: true
+    is_active: true
+    date_joined: 2020-04-13 11:13:56.620925+00:00
+    groups: []
+    user_permissions: []
+- model: admin.logentry
+  pk: 1
+  fields:
+    action_time: 2020-04-13 18:23:32.318241+00:00
+    user: 1
+    content_type: 7
+    object_id: '1'
+    object_repr: "Ra\u010Dunari"
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 2
+  fields:
+    action_time: 2020-04-13 18:23:38.140389+00:00
+    user: 1
+    content_type: 7
+    object_id: '2'
+    object_repr: Komponente
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 3
+  fields:
+    action_time: 2020-04-13 18:23:48.928855+00:00
+    user: 1
+    content_type: 7
+    object_id: '3'
+    object_repr: Desktop
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 4
+  fields:
+    action_time: 2020-04-13 18:23:55.738740+00:00
+    user: 1
+    content_type: 7
+    object_id: '4'
+    object_repr: Laptop
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 5
+  fields:
+    action_time: 2020-04-13 18:24:02.811277+00:00
+    user: 1
+    content_type: 7
+    object_id: '5'
+    object_repr: Server
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 6
+  fields:
+    action_time: 2020-04-13 18:24:15.151857+00:00
+    user: 1
+    content_type: 7
+    object_id: '6'
+    object_repr: "Mati\u010Dne plo\u010De"
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 7
+  fields:
+    action_time: 2020-04-13 18:24:41.361448+00:00
+    user: 1
+    content_type: 7
+    object_id: '7'
+    object_repr: Procesori
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 8
+  fields:
+    action_time: 2020-04-13 18:25:46.336748+00:00
+    user: 1
+    content_type: 11
+    object_id: '1'
+    object_repr: "\u017Dika Trade d.o.o."
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 9
+  fields:
+    action_time: 2020-04-13 18:26:42.996905+00:00
+    user: 1
+    content_type: 9
+    object_id: '1'
+    object_repr: X1 Carbon Gen 7
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 10
+  fields:
+    action_time: 2020-04-13 18:32:25.357163+00:00
+    user: 1
+    content_type: 9
+    object_id: '2'
+    object_repr: XPS 15 7590
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 11
+  fields:
+    action_time: 2020-04-13 18:34:50.156765+00:00
+    user: 1
+    content_type: 9
+    object_id: '3'
+    object_repr: MacBook Pro 16
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 12
+  fields:
+    action_time: 2020-04-13 18:36:38.334923+00:00
+    user: 1
+    content_type: 11
+    object_id: '2'
+    object_repr: Laza Export-Import d.o.o
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 13
+  fields:
+    action_time: 2020-04-13 18:37:38.742562+00:00
+    user: 1
+    content_type: 9
+    object_id: '4'
+    object_repr: PowerEdge R940
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 14
+  fields:
+    action_time: 2020-04-13 18:40:41.380983+00:00
+    user: 1
+    content_type: 9
+    object_id: '5'
+    object_repr: ThinkSystem SD530
+    action_flag: 1
+    change_message: '[{"added": {}}]'

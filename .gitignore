@@ -131,3 +131,4 @@ dmypy.json
 .idea/
 webshop.log
 node_modules/
+frontend/dist/
