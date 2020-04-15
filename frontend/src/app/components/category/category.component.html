@@ -1,0 +1,6 @@
+<h2 *ngIf="category | async as cat">{{cat.name}} {{cat.parent_id}}</h2>
+<h3 *ngIf="parent | async as p">Parent: {{p.name}}</h3>
+<h3>Subcategories:</h3>
+<p *ngFor="let cat of children | async"><a [routerLink]="['/category', cat.id]">{{cat.name}}</a></p>
+<h3>Products:</h3>
+<p *ngFor="let prod of products | async"><a [routerLink]="['/product', prod.id]">{{prod.vendor}} {{prod.name}}</a></p>

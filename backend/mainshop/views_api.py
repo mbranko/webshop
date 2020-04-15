@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
 import django_filters
-from django_filters.rest_framework import DjangoFilterBackend, FilterSet, BooleanFilter
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, BooleanFilter, NumberFilter
 from rest_framework import permissions, generics, status
 from rest_framework.decorators import api_view, throttle_classes, permission_classes
 from rest_framework.response import Response
@@ -140,7 +140,7 @@ class ProductList(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
-    filter_fields = ['name', 'vendor', 'supplier__name']
+    filter_fields = ['name', 'vendor', 'supplier__name', 'category_id']
 
 
 class ProductDetail(generics.RetrieveAPIView):
@@ -156,10 +156,11 @@ class CategoryFilter(FilterSet):
     GET /api/categories/?noparent=True
     """
     noparent = BooleanFilter(field_name='parent', lookup_expr='isnull')
+    child = NumberFilter(field_name='categoryset', lookup_expr='contains')
 
     class Meta:
         model = Category
-        fields = ['name', 'parent', 'noparent']
+        fields = ['name', 'parent', 'noparent', 'child']
 
 
 class CategoryList(generics.ListAPIView):
