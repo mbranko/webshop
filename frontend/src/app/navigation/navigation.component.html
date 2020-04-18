@@ -28,7 +28,7 @@
       <span *ngIf="!loggedIn()">
         <span class="right-menu"><a [routerLink]="['/login']">Login</a></span>
         <span> | </span>
-        <span class="right-menu"><a>Register</a></span>
+        <span class="right-menu"><a [routerLink]="['/register']">Register</a></span>
       </span>
     </mat-toolbar>
 

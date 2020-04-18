@@ -30,6 +30,7 @@ import { CategoryComponent } from './components/category/category.component';
 import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PaymentComponent } from './components/payment/payment.component';
     CategoryComponent,
     ProductComponent,
     CartComponent,
-    PaymentComponent
+    PaymentComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
