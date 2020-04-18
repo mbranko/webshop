@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from concurrency.fields import AutoIncVersionField
 
 
 class Category(models.Model):
@@ -36,6 +37,7 @@ class Product(models.Model):
     description = models.TextField(max_length=2000, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available_quantity = models.IntegerField(default=0)
+    version = AutoIncVersionField(default=1)
 
     def __str__(self):
         return self.name

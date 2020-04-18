@@ -13,8 +13,9 @@ from rest_framework import permissions, generics, status
 from rest_framework.decorators import api_view, throttle_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.throttling import UserRateThrottle
-from drf_yasg.openapi import Schema, TYPE_STRING, TYPE_OBJECT
+from drf_yasg.openapi import Schema, TYPE_STRING, TYPE_OBJECT, TYPE_ARRAY, TYPE_NUMBER, TYPE_INTEGER
 from drf_yasg.utils import swagger_auto_schema
+from concurrency.exceptions import RecordModifiedError
 from mainshop.email import ACTIVATE_ACCOUNT_TEXT, ACTIVATE_ACCOUNT_TITLE
 from mainshop.models import *
 from mainshop.serializers import *
@@ -115,6 +116,30 @@ def register(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(
+    method='POST',
+    operation_description="Request account registration",
+    request_body=Schema(
+        title='Account registration data',
+        type=TYPE_OBJECT,
+        properties={
+            'firstname': Schema(type=TYPE_STRING),
+            'lastname': Schema(type=TYPE_STRING),
+            'email': Schema(type=TYPE_STRING),
+            'password': Schema(type=TYPE_STRING),
+            'address': Schema(type=TYPE_STRING),
+            'city': Schema(type=TYPE_STRING),
+            'zipcode': Schema(type=TYPE_STRING),
+        },
+        required=['firstname', 'lastname', 'email', 'password', 'address', 'city', 'zipcode']
+    ),
+    responses={
+       201: 'Purchase order created',
+       404: 'Not enough items available',
+       409: 'Optimistic lock: other client updated the same product',
+       400: 'Invalid content in request',
+       500: 'Internal server error',
+    })
 @api_view(['POST'])
 def purchase(request):
     try:
@@ -124,10 +149,18 @@ def purchase(request):
             pid = order_item['productID']
             quantity = order_item['quantity']
             product = Product.objects.get(id=pid)
-            cart_item = ShoppingCartItem(cart=cart, product=product, quantity=quantity)
-            cart_item.save()
+            if product.available_quantity >= quantity:
+                product.available_quantity -= quantity
+                product.save()
+                cart_item = ShoppingCartItem(cart=cart, product=product, quantity=quantity)
+                cart_item.save()
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
         logger.info(f'Recorded purchase for: {request.user.email}')
         return Response(status=status.HTTP_201_CREATED)
+    except RecordModifiedError:
+        logger.warning('Optimistic lock!!!')
+        return Response(status=status.HTTP_409_CONFLICT)
     except Product.MultipleObjectsReturned:
         logger.fatal(f'Multiple products found for ID: {pid}')
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -139,6 +172,29 @@ def purchase(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(
+    method='GET',
+    operation_description="Fetch 6 most popular products",
+    responses={
+       200: Schema(
+           type=TYPE_ARRAY,
+           items=Schema(
+               type=TYPE_OBJECT,
+               properties={
+                   'id': Schema(type=TYPE_STRING),
+                   'name': Schema(type=TYPE_STRING),
+                   'vendor': Schema(type=TYPE_STRING),
+                   'description': Schema(type=TYPE_STRING),
+                   'price': Schema(type=TYPE_NUMBER),
+                   'available_quantity': Schema(type=TYPE_INTEGER),
+                   'category': Schema(type=TYPE_INTEGER),
+                   'supplier': Schema(type=TYPE_INTEGER),
+               }
+           ),
+           required=['id', 'name', 'vendor', 'price', 'available_quantity', 'category', 'supplier']
+       ),
+       500: 'Internal server error',
+    })
 @api_view(['GET'])
 @permission_classes([permissions.AllowAny])
 def most_popular_products(request):

@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from mainshop.models import Customer
-
+from concurrency.exceptions import RecordModifiedError
+from mainshop.models import Customer, Category, Product, Supplier
 
 
 class RegistrationTests(TestCase):
@@ -152,6 +152,50 @@ class RegistrationTests(TestCase):
                 break
             request_count += 1
         self.assertLessEqual(request_count, settings.API_THROTTLE_RATE)
+
+
+class PurchaseTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.customer_1 = create_customer({
+            'firstname': 'John',
+            'lastname': 'Doe',
+            'email': 'john.doe@gmail.com',
+            'password': '*****',
+            'address': 'Trg Dositeja Obradovića 6',
+            'city': 'Novi Sad',
+            'zipcode': '21000',
+        })
+        cls.cat1 = Category.objects.create(name='Laptop', parent=None)
+        cls.sup1 = Supplier.objects.create(name='Zika Trade', address='', city='', zip_code='')
+        cls.prod1 = Product.objects.create(name='X1 Carbon', vendor='Lenovo', description='', price=1850,
+                                           supplier=cls.sup1, category=cls.cat1, available_quantity=6)
+        cls.prod2 = Product.objects.create(name='XPS 15 7590', vendor='Dell', description='', price=1850,
+                                           supplier=cls.sup1, category=cls.cat1, available_quantity=6)
+
+    def test_purchase_has_enough(self):
+        c = Client()
+        status_1, token_1, customer_id_1 = authenticate(self, c, self.customer_1.user.email, self.customer_1.password)
+        req = {'items': [{'productID': self.prod1.id, 'quantity': 1}]}
+        response = c.post('/api/purchase/', data=req, HTTP_AUTHORIZATION=f'JWT {token_1}', content_type='application/json')
+        self.assertEquals(response.status_code, 201)
+
+    def test_purchase_not_enough(self):
+        c = Client()
+        status_1, token_1, customer_id_1 = authenticate(self, c, self.customer_1.user.email, self.customer_1.password)
+        req = {'items': [{'productID': self.prod1.id, 'quantity': 25}]}
+        response = c.post('/api/purchase/', data=req, HTTP_AUTHORIZATION=f'JWT {token_1}', content_type='application/json')
+        self.assertEquals(response.status_code, 404)
+
+    def test_purchase_optimistic_lock(self):
+        p1 = Product.objects.get(id=1)
+        p2 = Product.objects.get(id=1)
+        p1.available_quantity -= 1
+        p1.save()
+        p2.available_quantity -= 1
+        with self.assertRaises(RecordModifiedError) as context:
+            p2.save()
+            self.assertTrue('Record has been modified' in str(context.exception))
 
 
 def authenticate(test_case, client, username, password):

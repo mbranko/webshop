@@ -59,24 +59,19 @@
     app_label: mainshop
     model: shoppingcartitem
 - model: sessions.session
-  pk: 2oucalc2allevmeale97josg1d7bp83z
+  pk: hpw48kvvp1h4tg4ph7h78z1oh3wrtfb3
   fields:
-    session_data: N2EwZTUxNGQwOGQ2ZDgwNDZmYTY5MzVmM2YzN2U5NGUwNTMxNmMxZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoid2Vic2hvcC5hdXRoLkVtYWlsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6ImE3Y2FjNjRkYmE2Y2UzMmI5YWIwY2Q2MzJmNjFmMzk3MzRhOGVkMzYifQ==
-    expire_date: 2020-04-27 11:42:43.427998+00:00
-- model: sessions.session
-  pk: a1tvy6tbqxagn5akmpwoao1juxcyhvu4
-  fields:
-    session_data: N2EwZTUxNGQwOGQ2ZDgwNDZmYTY5MzVmM2YzN2U5NGUwNTMxNmMxZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoid2Vic2hvcC5hdXRoLkVtYWlsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6ImE3Y2FjNjRkYmE2Y2UzMmI5YWIwY2Q2MzJmNjFmMzk3MzRhOGVkMzYifQ==
-    expire_date: 2020-04-27 17:09:26.350995+00:00
+    session_data: YjgzOGVmZDk0MWFmNGVmYzNmM2FlODAyYjI1YzE1M2JmODE0ZTNhNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoid2Vic2hvcC5hdXRoLkVtYWlsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IjI3ZjU0MWI1ZWY5OTU0YWIyNDA4MTZjMTE3NDAxZDJlYWQxOGMzZTIifQ==
+    expire_date: 2020-05-02 16:50:33.899179+00:00
 - model: mainshop.category
   pk: 1
   fields:
-    name: "Ra\u010Dunari"
+    name: Computers
     parent: null
 - model: mainshop.category
   pk: 2
   fields:
-    name: Komponente
+    name: Components
     parent: null
 - model: mainshop.category
   pk: 3
@@ -96,12 +91,12 @@
 - model: mainshop.category
   pk: 6
   fields:
-    name: "Mati\u010Dne plo\u010De"
+    name: Motherboards
     parent: 2
 - model: mainshop.category
   pk: 7
   fields:
-    name: Procesori
+    name: Processors
     parent: 2
 - model: mainshop.supplier
   pk: 1
@@ -120,16 +115,17 @@
 - model: mainshop.product
   pk: 1
   fields:
-    name: X1 Carbon Gen 7
+    name: X1 Carbon Gen7
     vendor: Lenovo
     category: 4
     supplier: 1
     description: "- Slimmer, sleeker and lighter version\r\n- Up to 18.3-hour of battery
-      life\r\n- Built-in suite of ThinkShield security features\r\n- Intel\xAE Core\u2122
-      technology for high performance\r\n- Enhanced audio for ultimate surround sound\r\n-
-      An optional carbon-fiber weave top cover available"
+      life\r\n- Built-in suite of ThinkShield security features\r\n- Intel Core technology
+      for high performance\r\n- Enhanced audio for ultimate surround sound\r\n- An
+      optional carbon-fiber weave top cover available"
     price: '1650.00'
-    available_quantity: 10
+    available_quantity: 21
+    version: 0
 - model: mainshop.product
   pk: 2
   fields:
@@ -137,10 +133,11 @@
     vendor: Dell
     category: 4
     supplier: 1
-      description: "The world\u2019s smallest 15.6-inch performance laptop with a stunning
-        OLED display option. Now featuring 9th Gen Intel\xAE Core\u2122 processors."
-    price: '1450.00'
-    available_quantity: 7
+    description: The worlds smallest 15.6-inch performance laptop with a stunning
+      OLED display option. Now featuring 9th Gen Intel Core processors.
+    price: '1750.00'
+    available_quantity: 11
+    version: 0
 - model: mainshop.product
   pk: 3
   fields:
@@ -148,14 +145,15 @@
     vendor: Apple
     category: 4
     supplier: 1
-    description: "- 2.3GHz 8\u2011core Intel Core i9, Turbo Boost up to 4.8GHz, with
-      16MB shared L3 cache, Configurable to 2.4GHz 8\u2011core Intel Core i9, Turbo
-      Boost up to 5.0GHz, with 16MB shared L3 cache\r\n- 1TB SSD, Configurable to
-      2TB, 4TB, or 8TB SSD\r\n- AMD Radeon Pro 5500M with 4GB of GDDR6 memory and
-      automatic graphics switching\r\n- Intel UHD Graphics 630\r\n- Configurable to
-      AMD Radeon Pro 5500M with 8GB of GDDR6 memory"
-    price: '2650.00'
-    available_quantity: 6
+    description: "- 2.3GHz 8-core Intel Core i9, Turbo Boost up to 4.8GHz, with 16MB
+      shared L3 cache, Configurable to 2.4GHz 8-core Intel Core i9, Turbo Boost up
+      to 5.0GHz, with 16MB shared L3 cache\r\n- 1TB SSD, Configurable to 2TB, 4TB,
+      or 8TB SSD\r\n- AMD Radeon Pro 5500M with 4GB of GDDR6 memory and automatic
+      graphics switching\r\n- Intel UHD Graphics 630\r\n- Configurable to AMD Radeon
+      Pro 5500M with 8GB of GDDR6 memory"
+    price: '2550.00'
+    available_quantity: 13
+    version: 0
 - model: mainshop.product
   pk: 4
   fields:
@@ -165,13 +163,14 @@
     supplier: 2
     description: "Empower your organization to make the best decisions fast using
       real-time data and analytics. The PowerEdge R940 supports 50% more NVMe drives
-      than the R930, up to 48 DIMMs (24 of which can be Intel\xAE Optane\u2122 DC
-      persistent memory DCPMMs) and up to 15.36TB of memory*. Make I/O bottlenecks
-      a thing of the past and keep processor utilization at its peak.\r\n\r\nIdeal
-      workloads:\r\n- In-memory and large, complex databases\r\n- Unix to Linux migration\r\n-
-      ERP, CRM\r\n- Dense virtualization"
-    price: '7430.00'
-    available_quantity: 17
+      than the R930, up to 48 DIMMs (24 of which can be Intel Optane DC persistent
+      memory DCPMMs) and up to 15.36TB of memory*. Make I/O bottlenecks a thing of
+      the past and keep processor utilization at its peak.\r\n\r\nIdeal workloads:\r\n-
+      In-memory and large, complex databases\r\n- Unix to Linux migration\r\n- ERP,
+      CRM\r\n- Dense virtualization"
+    price: '6580.00'
+    available_quantity: 6
+    version: 0
 - model: mainshop.product
   pk: 5
   fields:
@@ -184,8 +183,22 @@
       Module\r\n- SharedIO for improved networking optimization\r\n- Accelerates HPC,
       AI, and enterprise workloads\r\n- Optional GPU tray supports 2x GPUs per node\r\n-
       Supported by XClarity Management and LiCO platform"
-    price: '6540.00'
-    available_quantity: 14
+    price: '7440.00'
+    available_quantity: 5
+    version: 0
+- model: mainshop.product
+  pk: 6
+  fields:
+    name: ProLiant DL180 Gen10
+    vendor: HP
+    category: 5
+    supplier: 2
+    description: "HPE ProLiant DL180 Gen10 rack server with one Intel\xAE Xeon\xAE
+      3204 processor, 32 GB memory, one HPE Smart Array E208i-a SR Gen10 Controller,
+      eight large form factor drive bays and one 500W power supply"
+    price: '6640.00'
+    available_quantity: 7
+    version: 0
 - model: auth.permission
   pk: 1
   fields:
@@ -477,92 +490,83 @@
 - model: auth.user
   pk: 1
   fields:
-    password: pbkdf2_sha256$180000$p4JA4epiDIvt$3gd1JngwJ0ufLT+w+Gjmj8sSNd/XEGgdpRRxjgoHO1A=
-    last_login: 2020-04-13 17:09:26.334930+00:00
+    password: pbkdf2_sha256$180000$hSfjmMm49KbZ$bZmzy//lmwn930kuJ/KeVyFtVhb+8iIRQsBx5u9QZkM=
+    last_login: 2020-04-18 16:50:33+00:00
     is_superuser: true
-    username: branko
-    first_name: ''
-    last_name: ''
-    email: mbranko@uns.ac.rs
+    username: john.doe@gmail.com
+    first_name: John
+    last_name: Doe
+    email: john.doe@gmail.com
     is_staff: true
     is_active: true
-    date_joined: 2020-04-13 11:13:56.620925+00:00
+    date_joined: 2020-04-18 16:50:00+00:00
     groups: []
     user_permissions: []
+- model: auth.user
+  pk: 2
+  fields:
+    password: pbkdf2_sha256$180000$GWDyJjqqfYCc$GmxrC6yRax2kTCVTIzBcQxyFi4WjlrYVLfDhQzmmF/A=
+    last_login: null
+    is_superuser: false
+    username: jane.doe@gmail.com
+    first_name: Jane
+    last_name: Doe
+    email: jane.doe@gmail.com
+    is_staff: false
+    is_active: true
+    date_joined: 2020-04-18 16:52:21.152477+00:00
+    groups: []
+    user_permissions: []
+- model: mainshop.customer
+  pk: 1
+  fields:
+    user: 1
+    address: "Trg Dositeja Obradovi\u0107a 6"
+    city: Novi Sad
+    zip_code: '21000'
+    activation_link: dbde93e1fb97ab57e8cf1705c40062e52313a7f9
+- model: mainshop.customer
+  pk: 2
+  fields:
+    user: 2
+    address: "Trg Dositeja Obradovi\u0107a 6"
+    city: Novi Sad
+    zip_code: '21000'
+    activation_link: 7659aff2d831408e0d690ed57c59a2ef8ce28dc1
 - model: admin.logentry
   pk: 1
   fields:
-    action_time: 2020-04-13 18:23:32.318241+00:00
+    action_time: 2020-04-18 16:51:13.595984+00:00
     user: 1
-    content_type: 7
+    content_type: 8
     object_id: '1'
-    object_repr: "Ra\u010Dunari"
+    object_repr: ' '
     action_flag: 1
     change_message: '[{"added": {}}]'
 - model: admin.logentry
   pk: 2
   fields:
-    action_time: 2020-04-13 18:23:38.140389+00:00
+    action_time: 2020-04-18 16:51:52.365765+00:00
     user: 1
-    content_type: 7
-    object_id: '2'
-    object_repr: Komponente
-    action_flag: 1
-    change_message: '[{"added": {}}]'
+    content_type: 4
+    object_id: '1'
+    object_repr: john.doe
+    action_flag: 2
+    change_message: '[{"changed": {"fields": ["First name", "Last name"]}}]'
 - model: admin.logentry
   pk: 3
   fields:
-    action_time: 2020-04-13 18:23:48.928855+00:00
+    action_time: 2020-04-18 16:53:46.075904+00:00
     user: 1
-    content_type: 7
-    object_id: '3'
-    object_repr: Desktop
-    action_flag: 1
-    change_message: '[{"added": {}}]'
+    content_type: 4
+    object_id: '1'
+    object_repr: john.doe@gmail.com
+    action_flag: 2
+    change_message: '[{"changed": {"fields": ["Username"]}}]'
 - model: admin.logentry
   pk: 4
   fields:
-    action_time: 2020-04-13 18:23:55.738740+00:00
-    user: 1
-    content_type: 7
-    object_id: '4'
-    object_repr: Laptop
-    action_flag: 1
-    change_message: '[{"added": {}}]'
-- model: admin.logentry
-  pk: 5
-  fields:
-    action_time: 2020-04-13 18:24:02.811277+00:00
-    user: 1
-    content_type: 7
-    object_id: '5'
-    object_repr: Server
-    action_flag: 1
-    change_message: '[{"added": {}}]'
-- model: admin.logentry
-  pk: 6
-  fields:
-    action_time: 2020-04-13 18:24:15.151857+00:00
-    user: 1
-    content_type: 7
-    object_id: '6'
-    object_repr: "Mati\u010Dne plo\u010De"
-    action_flag: 1
-    change_message: '[{"added": {}}]'
-- model: admin.logentry
-  pk: 7
-  fields:
-    action_time: 2020-04-13 18:24:41.361448+00:00
-    user: 1
-    content_type: 7
-    object_id: '7'
-    object_repr: Procesori
-    action_flag: 1
-    change_message: '[{"added": {}}]'
-- model: admin.logentry
-  pk: 8
-  fields:
-    action_time: 2020-04-13 18:25:46.336748+00:00
+    action_time: 2020-04-18 16:54:30.908322+00:00
     user: 1
     content_type: 11
     object_id: '1'
@@ -570,39 +574,9 @@
     action_flag: 1
     change_message: '[{"added": {}}]'
 - model: admin.logentry
-  pk: 9
+  pk: 5
   fields:
-    action_time: 2020-04-13 18:26:42.996905+00:00
-    user: 1
-    content_type: 9
-    object_id: '1'
-    object_repr: X1 Carbon Gen 7
-    action_flag: 1
-    change_message: '[{"added": {}}]'
-- model: admin.logentry
-  pk: 10
-  fields:
-    action_time: 2020-04-13 18:32:25.357163+00:00
-    user: 1
-    content_type: 9
-    object_id: '2'
-    object_repr: XPS 15 7590
-    action_flag: 1
-    change_message: '[{"added": {}}]'
-- model: admin.logentry
-  pk: 11
-  fields:
-    action_time: 2020-04-13 18:34:50.156765+00:00
-    user: 1
-    content_type: 9
-    object_id: '3'
-    object_repr: MacBook Pro 16
-    action_flag: 1
-    change_message: '[{"added": {}}]'
-- model: admin.logentry
-  pk: 12
-  fields:
-    action_time: 2020-04-13 18:36:38.334923+00:00
+    action_time: 2020-04-18 16:54:42.761367+00:00
     user: 1
     content_type: 11
     object_id: '2'
@@ -610,9 +584,109 @@
     action_flag: 1
     change_message: '[{"added": {}}]'
 - model: admin.logentry
+  pk: 6
+  fields:
+    action_time: 2020-04-18 16:55:08.875322+00:00
+    user: 1
+    content_type: 7
+    object_id: '1'
+    object_repr: Computers
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 7
+  fields:
+    action_time: 2020-04-18 16:55:13.731771+00:00
+    user: 1
+    content_type: 7
+    object_id: '2'
+    object_repr: Components
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 8
+  fields:
+    action_time: 2020-04-18 16:55:24.048370+00:00
+    user: 1
+    content_type: 7
+    object_id: '3'
+    object_repr: Desktop
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 9
+  fields:
+    action_time: 2020-04-18 16:55:33.154583+00:00
+    user: 1
+    content_type: 7
+    object_id: '4'
+    object_repr: Laptop
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 10
+  fields:
+    action_time: 2020-04-18 16:55:40.868803+00:00
+    user: 1
+    content_type: 7
+    object_id: '5'
+    object_repr: Server
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 11
+  fields:
+    action_time: 2020-04-18 16:55:50.211907+00:00
+    user: 1
+    content_type: 7
+    object_id: '6'
+    object_repr: Motherboards
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 12
+  fields:
+    action_time: 2020-04-18 16:55:58.071044+00:00
+    user: 1
+    content_type: 7
+    object_id: '7'
+    object_repr: Processors
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
   pk: 13
   fields:
-    action_time: 2020-04-13 18:37:38.742562+00:00
+    action_time: 2020-04-18 16:57:56.470824+00:00
+    user: 1
+    content_type: 9
+    object_id: '1'
+    object_repr: X1 Carbon Gen7
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 14
+  fields:
+    action_time: 2020-04-18 16:59:06.978366+00:00
+    user: 1
+    content_type: 9
+    object_id: '2'
+    object_repr: XPS 15 7590
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 15
+  fields:
+    action_time: 2020-04-18 17:00:44.315387+00:00
+    user: 1
+    content_type: 9
+    object_id: '3'
+    object_repr: MacBook Pro 16
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 16
+  fields:
+    action_time: 2020-04-18 17:02:06.703394+00:00
     user: 1
     content_type: 9
     object_id: '4'
@@ -620,12 +694,22 @@
     action_flag: 1
     change_message: '[{"added": {}}]'
 - model: admin.logentry
-  pk: 14
+  pk: 17
   fields:
-    action_time: 2020-04-13 18:40:41.380983+00:00
+    action_time: 2020-04-18 17:03:11.911001+00:00
     user: 1
     content_type: 9
     object_id: '5'
     object_repr: ThinkSystem SD530
+    action_flag: 1
+    change_message: '[{"added": {}}]'
+- model: admin.logentry
+  pk: 18
+  fields:
+    action_time: 2020-04-18 17:05:49.360781+00:00
+    user: 1
+    content_type: 9
+    object_id: '6'
+    object_repr: ProLiant DL180 Gen10
     action_flag: 1
     change_message: '[{"added": {}}]'
