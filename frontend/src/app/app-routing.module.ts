@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { CategoryComponent } from './components/category/category.component';
+import { ProductComponent } from './components/product/product.component';
+import { CartComponent } from './components/cart/cart.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 const routes: Routes = [{
     path: '',
@@ -10,6 +13,15 @@ const routes: Routes = [{
   }, {
     path: 'category/:id',
     component: CategoryComponent,
+  }, {
+    path: 'product/:id',
+    component: ProductComponent,
+  }, {
+    path: 'cart',
+    component: CartComponent,
+  }, {
+    path: 'payment',
+    component: PaymentComponent,
   }, {
     path: 'login',
     component: LoginComponent,

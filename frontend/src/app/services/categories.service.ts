@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../models';
 
@@ -22,7 +23,7 @@ export class CategoriesService {
     return this.http.get<Category>(`/api/categories/${categoryID}`);
   }
 
-  getParent(categoryID: number): Observable<Category> {
-    return this.http.get<Category>(`/api/categories/?parent_id=${categoryID}`);
+  getParent(categoryID: number): Observable<Category[]> {
+    return this.http.get<Category[]>(`/api/categories/?child=${categoryID}`);
   }
 }

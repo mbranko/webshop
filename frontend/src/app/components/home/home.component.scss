@@ -1,0 +1,18 @@
+mat-card {
+  min-width: 300px;
+  margin-bottom: 20px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-container {
+  margin: 20px;
+}

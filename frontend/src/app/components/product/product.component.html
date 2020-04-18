@@ -1,0 +1,10 @@
+<mat-card *ngIf="product">
+  <mat-card-title><span>{{product.vendor}} {{product.name}}</span></mat-card-title>
+  <p *ngIf="category"><strong>Category: </strong> <a [routerLink]="['/category', category.id]">{{category.name}}</a></p>
+  <p><strong>Price:</strong> {{product.price}}</p>
+  <p><strong>Description:</strong></p>
+  <p style="white-space: pre-wrap">{{product.description}}</p>
+  <mat-card-actions>
+    <a mat-raised-button color="primary" (click)="add()">Add to cart</a>
+  </mat-card-actions>
+</mat-card>

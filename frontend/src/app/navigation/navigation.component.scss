@@ -20,6 +20,19 @@
   flex: 1 1 auto;
 }
 
-.pointer {
+.right-menu {
   cursor: pointer;
+  font-size: smaller;
+  a {
+    text-decoration: none;
+    color: white;
+  }
+}
+
+.home {
+  cursor: pointer;
+  a {
+    text-decoration: none;
+    color: white;
+  }
 }

@@ -23,6 +23,7 @@ export class JwtService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('cart');
   }
 
   public get loggedIn(): boolean {

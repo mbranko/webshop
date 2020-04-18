@@ -5,6 +5,8 @@ import smtplib
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.db.models import Sum
+from django.utils import timezone
 import django_filters
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, BooleanFilter, NumberFilter
 from rest_framework import permissions, generics, status
@@ -113,6 +115,41 @@ def register(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST'])
+def purchase(request):
+    try:
+        cart = ShoppingCart(customer=request.user.customer, order_date=timezone.now())
+        cart.save()
+        for order_item in request.data['items']:
+            pid = order_item['productID']
+            quantity = order_item['quantity']
+            product = Product.objects.get(id=pid)
+            cart_item = ShoppingCartItem(cart=cart, product=product, quantity=quantity)
+            cart_item.save()
+        logger.info(f'Recorded purchase for: {request.user.email}')
+        return Response(status=status.HTTP_201_CREATED)
+    except Product.MultipleObjectsReturned:
+        logger.fatal(f'Multiple products found for ID: {pid}')
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    except Product.DoesNotExist:
+        logger.fatal(f'Unknown product ID: {pid}')
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    except KeyError:
+        logger.fatal(f'Invalid request data: {request.data}')
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def most_popular_products(request):
+    try:
+        result = Product.objects.all().annotate(sold=Sum('shoppingcartitem__quantity')).order_by('-sold')[:6]
+    except Product.DoesNotExist:
+        result = []
+    srlzr = ProductSerializer(result, many=True)
+    return Response(srlzr.data, status=status.HTTP_200_OK, content_type='application/json')
+
+
 def generate_link(email, timestamp):
     """
     Generise link za aktivaciju naloga
@@ -136,7 +173,7 @@ class CustomerDetail(generics.RetrieveUpdateAPIView):
 
 
 class ProductList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
@@ -144,7 +181,7 @@ class ProductList(generics.ListAPIView):
 
 
 class ProductDetail(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -152,19 +189,22 @@ class ProductDetail(generics.RetrieveAPIView):
 class CategoryFilter(FilterSet):
     """
     Omogucava filtriranje kategorija:
-    GET /api/categories/?parent=1
-    GET /api/categories/?noparent=True
+    GET /api/categories/?parent=1 vraca kategorije kojima je roditelj catID:1
+    GET /api/categories/?noparent=True vraca kategorije koje nemaju roditelja (top-level kategorije)
+    GET /api/categories/?child=1 vraca kategorije kojima je dete catID:1 (lista je ili prazna ili ima 1 element)
+    GET /api/categories/?product=1 vraca kategorije kojima pripada product ID:1 (lista je prazna ili ima 1 element)
     """
     noparent = BooleanFilter(field_name='parent', lookup_expr='isnull')
-    child = NumberFilter(field_name='categoryset', lookup_expr='contains')
+    child = NumberFilter(field_name='category', lookup_expr='exact')
+    product = NumberFilter(field_name='product', lookup_expr='exact')
 
     class Meta:
         model = Category
-        fields = ['name', 'parent', 'noparent', 'child']
+        fields = ['name', 'parent', 'noparent', 'child', 'product']
 
 
 class CategoryList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     filter_backends = [DjangoFilterBackend]
@@ -172,13 +212,13 @@ class CategoryList(generics.ListAPIView):
 
 
 class CategoryDetail(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
 
 class SupplierList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
     filter_backends = [DjangoFilterBackend]
@@ -186,7 +226,7 @@ class SupplierList(generics.ListAPIView):
 
 
 class SupplierDetail(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
 

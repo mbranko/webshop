@@ -1,1 +1,12 @@
-<p>home works!</p>
+<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px" class="card-container">
+  <mat-card *ngFor="let product of products | async">
+    <mat-card-content>
+      <mat-card-title>{{product.vendor}} {{product.name}}</mat-card-title>
+      <mat-card-subtitle>USD {{product.price|number:'1.2-2'}}</mat-card-subtitle>
+    </mat-card-content>
+    <mat-card-actions>
+      <span class="fill-space"></span>
+      <a mat-stroked-button [routerLink]="['/product', product.id]" color="primary">Details</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

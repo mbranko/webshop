@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,6 +8,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -17,9 +17,19 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { CategoryComponent } from './components/category/category.component';
+import { ProductComponent } from './components/product/product.component';
+import { CartComponent } from './components/cart/cart.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +37,10 @@ import { CategoryComponent } from './components/category/category.component';
     NavigationComponent,
     LoginComponent,
     HomeComponent,
-    CategoryComponent
+    CategoryComponent,
+    ProductComponent,
+    CartComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -42,9 +55,9 @@ import { CategoryComponent } from './components/category/category.component';
         tokenGetter: function tokenGetter() {
           return localStorage.getItem('token');
         },
-        whitelistedDomains: ['badasswebshop.com', 'localhost:4200'],
-        blacklistedRoutes: ['badasswebshop.com/login/', 'localhost:4200/login/'],
-        authScheme: 'JWT',
+        // whitelistedDomains: ['badasswebshop.com', 'localhost:4200'],
+        // blacklistedRoutes: ['badasswebshop.com/login/', 'localhost:4200/login/'],
+        authScheme: 'JWT ',
       }
     }),
     MatToolbarModule,
@@ -55,6 +68,12 @@ import { CategoryComponent } from './components/category/category.component';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    OverlayModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

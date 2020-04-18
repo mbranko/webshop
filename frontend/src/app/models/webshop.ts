@@ -14,6 +14,17 @@ export interface Product {
   supplier: number;
 }
 
+export interface Cart {
+  creationDate: Date;
+  items: CartItem[];
+}
+
+export interface CartItem {
+  productID: number;
+  product?: Product;
+  quantity: number;
+}
+
 export interface CommonUser {
   email: string;
   firstName: string;

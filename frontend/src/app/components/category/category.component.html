@@ -1,6 +1,16 @@
-<h2 *ngIf="category | async as cat">{{cat.name}} {{cat.parent_id}}</h2>
-<h3 *ngIf="parent | async as p">Parent: {{p.name}}</h3>
-<h3>Subcategories:</h3>
-<p *ngFor="let cat of children | async"><a [routerLink]="['/category', cat.id]">{{cat.name}}</a></p>
-<h3>Products:</h3>
-<p *ngFor="let prod of products | async"><a [routerLink]="['/product', prod.id]">{{prod.vendor}} {{prod.name}}</a></p>
+<mat-card>
+  <mat-card-title><span *ngIf="category | async as cat">{{cat.name}}</span></mat-card-title>
+  <p *ngIf="parent">Parent category: <a [routerLink]="['/category', parent.id]">{{parent.name}}</a></p>
+  <h3 *ngIf="(children | async)?.length">Subcategories:</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let cat of children | async">
+      <a [routerLink]="['/category', cat.id]">{{cat.name}}</a>
+    </mat-list-item>
+  </mat-list>
+  <h3 *ngIf="(products | async)?.length">Products:</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let prod of products | async">
+      <a [routerLink]="['/product', prod.id]">{{prod.vendor}} {{prod.name}}</a>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

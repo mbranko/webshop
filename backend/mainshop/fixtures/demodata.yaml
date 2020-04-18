@@ -137,8 +137,8 @@
     vendor: Dell
     category: 4
     supplier: 1
-    description: "The world\u2019s smallest 15.6-inch performance laptop with a stunning
-      OLED display option. Now featuring 9th Gen Intel\xAE Core\u2122 processors."
+      description: "The world\u2019s smallest 15.6-inch performance laptop with a stunning
+        OLED display option. Now featuring 9th Gen Intel\xAE Core\u2122 processors."
     price: '1450.00'
     available_quantity: 7
 - model: mainshop.product

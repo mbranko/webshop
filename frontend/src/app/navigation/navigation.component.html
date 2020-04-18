@@ -1,9 +1,9 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
+      [attr.role]="(isHandset | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset | async) ? 'over' : 'side'"
+      [opened]="(isHandset | async) === false">
+    <mat-toolbar>Categories</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/category', cat.id]" *ngFor="let cat of rootCategories">{{cat.name}}</a>
     </mat-nav-list>
@@ -15,12 +15,21 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
+        *ngIf="isHandset | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>Webshop</span>
+      <span class="home"><a [routerLink]="['/']">Webshop</a></span>
       <span class="fill-space"></span>
-      <span *ngIf="loggedIn()" class="pointer"><a (click)="logout()" class="pointer">Logout</a></span>
+      <span *ngIf="loggedIn()">
+        <span class="right-menu"><a [routerLink]="['/cart']">Cart: {{cartSize}}</a></span>
+        <span> | </span>
+        <span class="right-menu"><a (click)="logout()">Logout</a></span>
+      </span>
+      <span *ngIf="!loggedIn()">
+        <span class="right-menu"><a [routerLink]="['/login']">Login</a></span>
+        <span> | </span>
+        <span class="right-menu"><a>Register</a></span>
+      </span>
     </mat-toolbar>
 
     <router-outlet></router-outlet>

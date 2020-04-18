@@ -1,0 +1,41 @@
+<mat-card>
+  <mat-card-title>Your shopping cart</mat-card-title>
+  <table mat-table [dataSource]="cartTable">
+    <!-- Product name -->
+    <ng-container matColumnDef="product">
+      <th mat-header-cell *matHeaderCellDef> Product </th>
+      <td mat-cell *matCellDef="let element"> {{element.product}} </td>
+      <td mat-footer-cell *matFooterCellDef> <strong>Total</strong> </td>
+    </ng-container>
+
+    <!-- Price -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element" class="right"> {{element.price|number:'1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Quantity -->
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef> Quantity </th>
+      <td mat-cell *matCellDef="let element" class="right"> {{element.quantity|number:'1.0-0'}} </td>
+      <td mat-footer-cell *matFooterCellDef> </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let element" class="right"> {{element.total|number:'1.2-2'}} </td>
+      <td mat-footer-cell *matFooterCellDef> <strong>{{totalCost|number:'1.2-2'}}</strong> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="tableColumns"></tr>
+  </table>
+
+  <mat-card-footer>
+    <a [routerLink]="['/payment']" [disabled]="totalCost===0" mat-raised-button color="primary">Order</a>
+    <a (click)="empty()" [disabled]="totalCost===0" mat-raised-button color="warn">Empty</a>
+  </mat-card-footer>
+</mat-card>

@@ -18,6 +18,8 @@ urlpatterns = [
     path('shopping-carts/<int:pk>/', ShoppingCartDetail.as_view()),
     path('shopping-cart-items/', ShoppingCartItemList.as_view()),
     path('shopping-cart-items/<int:pk>/', ShoppingCartItemDetail.as_view()),
+    path('purchase/', purchase),
+    path('most-popular-products/', most_popular_products),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

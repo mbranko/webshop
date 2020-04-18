@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-title>Enter your payment information</mat-card-title>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="payment-form">
+    <mat-form-field class="full-width">
+      <mat-label>Name on card</mat-label>
+      <input matInput type="text" formControlName="name" required/>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Card number</mat-label>
+      <input matInput type="text" formControlName="cardNumber" required/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Expiry month:</mat-label>
+      <input matInput type="text" formControlName="expiryMonth" required/>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Expiry year:</mat-label>
+      <input matInput type="text" formControlName="expiryYear" required/>
+    </mat-form-field>
+  </form>
+
+  <mat-card-footer>
+    <a (click)="onSubmit()" [disabled]="isDisabled()" mat-raised-button color="accent">Purchase</a>
+  </mat-card-footer>
+
+</mat-card>

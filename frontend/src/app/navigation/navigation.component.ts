@@ -6,6 +6,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { CategoriesService } from '../services/categories.service';
 import { Category } from '../models';
 import { JwtService } from '../services/jwt.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-navigation',
@@ -14,7 +15,7 @@ import { JwtService } from '../services/jwt.service';
 })
 export class NavigationComponent implements OnInit {
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  isHandset: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
@@ -27,7 +28,8 @@ export class NavigationComponent implements OnInit {
     private router: Router,
     private breakpointObserver: BreakpointObserver,
     private categoriesService: CategoriesService,
-    private jwtService: JwtService) {}
+    private jwtService: JwtService,
+    private cartService: CartService) {}
 
   showMenu() {
     this.categoriesService.getRootCategories().subscribe((data: Category[]) => this.rootCategories = data);
@@ -44,5 +46,9 @@ export class NavigationComponent implements OnInit {
   logout() {
     this.jwtService.logout();
     this.router.navigate(['/login']);
+  }
+
+  public get cartSize(): number {
+    return this.cartService.cartSize;
   }
 }
