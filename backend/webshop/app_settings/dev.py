@@ -1,7 +1,6 @@
 from .base import *
 
 DEBUG = True
-SENDFILE_BACKEND = 'sendfile.backends.development'
 
 ALLOWED_HOSTS = ['localhost', ]
 
