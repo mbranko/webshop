@@ -43,6 +43,6 @@ RUN mkdir /private
 ARG django_settings=prod
 ENV DJANGO_SETTINGS=$django_settings
 RUN python3 /app/manage.py collectstatic --noinput 
-RUN rm -rf /app/webshop.log
+RUN rm -rf /app/log/webshop.log
 EXPOSE 8000
 CMD ["/app/run_prod.sh"]

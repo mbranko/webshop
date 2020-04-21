@@ -116,7 +116,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'webshop.log',
+            'filename': 'log/webshop.log',
             'formatter': 'medium'
         },
         'mail_admins': {
