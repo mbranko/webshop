@@ -556,16 +556,32 @@ uz prethodnu autentifikaciju pomoću HTTP cookie-ja.
 
 ### Transakcije
 
-TODO: Django default je auto commit mode, to se isključuje u konfig
-parametru. Onda se usvoji da je jedna transakcija = jedna obrada 
-zahteva.
+Podrazumevano ponašanje Django okvira za transakcije je da se sve
+operacije izvršavaju u *auto-commit* režimu. Ovaj režim može biti
+dovoljan za većinu funkcija za obradu zahteva, ali svakako nije
+dovoljan za iole složeniju aplikaciju. Ovo ponašanje može da se
+promeni na nivou cele aplikacije navođenjem konfiguracionog parametra
+`ATOMIC_REQUESTS` postavljenog na `True` u okviru parametara za
+pristup bazi podataka. Ova vrednost označava da je opseg trajanja
+transakcije jednak jednoj obradi HTTP zahteva, što je upravo ono
+što nam je i najčešće potrebno.
 
-TODO: Snimanje nove porudžbine podrazumeva smanjenje broja dostupnih
-proizvoda, što može dovesti do kolizije sa drugim korisnicima u
-konkurentnom pristupu istim proizvodima. Opisati optimističko
-zaključavanje sprovedeno u ovom slučaju. Obratiti pažnju na to da je
-optimističko prvo čitanje sprovedeno preko REST API-ja, a druga faza
-je u momentu poziva register.
+Situacija kada se u bazu podataka dodaje nova porudžbina podrazumeva
+da se ažurira broj dostupnih komada u opisu proizvoda (atribut
+`available_quantity` u klasi `Product`). Ukoliko dve konkurentne
+transakcije, odnosno obrade HTTP zahteva, ažuriraju isti proizvod,
+može doći do neispravnog preplitanja operacija. 
+
+Rešenje za ovaj problem može biti optimističko zaključavanje. 
+Inicijalno učitavanje podataka o proizvodu odvija se prilikom
+otvaranja frontend URL-a `/product/:id`. Tada će frontend aplikacija
+poslati GET zahtev na REST API iza putanje  `/api/products/:id/`.
+Trenutak u kome bi trebalo da se vrši optimistička provera je prilikom
+ažuriranja dostupne količine proizvoda. Za implementaciju
+optimističkog zaključavanja u Django radnom okviru postoji više
+rešenja. Ovde je upotrebljena biblioteka `django-concurrency`. Klasa
+`Product` ima atribut `version` za ovu namenu. Optimistička provera se
+odvija u funkciji `purchase` modula `views_api.py`.
 
 ### Testiranje
 
@@ -577,12 +593,12 @@ TODO: Opis arhitekture frontenda: servisi, komponente, rutiranje.
 
 ## Kontejneri
 
-TODO: Layout fajlova u image-u.
+TODO:
 
 ## Oblak
 
-Registruj se i prijavi se na Docker Hub. Opciono: Povezi Docker Hub i GitHub. Na Docker Hubu kreiraj novi repozitorijum i povezi ga sa github repozitorijumom, pokreni build na svaki push na master granu.
-
+Registruj se i prijavi se na Docker Hub. Publikuj svoj image na
+Docker Hub.
 ```bash
 docker login --username=brankomilosavljevic
 docker build -t webshop:latest .
@@ -600,3 +616,21 @@ curl -X POST \
   -d '{"name":"webshop","region":"nyc1","size":"s-1vcpu-1gb","image":"docker-18-04"}' \
   "https://api.digitalocean.com/v2/droplets"
 ```
+
+Povuci Docker image i pokreni ga:
+```bash
+docker pull brankomilosavljevic/webshop:latest
+docker run --detach --name webshop \
+  -e POSTGRES_HOST=private-db-postgresql-nyc1-58057-do-user-7397261-0.a.db.ondigitalocean.com \
+  -e POSTGRES_DBNAME=defaultdb \
+  -e POSTGRES_USER=doadmin \
+  -e POSTGRES_PASSWORD=******* \
+  -e POSTGRES_PORT=25060 \
+  -p 80:8000 \
+  -v /var/log/webshop:/app/log \
+  brankomilosavljevic/webshop:latest
+```
+
+DigitalOcean nudi mogućnost kreiranja više dropleta (instanci 
+servera), postavljanje load balancera ispred njih, nadzor tokom rada
+i slično.
