@@ -67,7 +67,7 @@ docker run --name webshopdb -e POSTGRES_USER=webshop -e POSTGRES_PASSWORD=websho
 
 Pokretanje aplikacije:
 ```bash
-docker run --name webshop -e DJANGO_SETTINGS=prod -p 8000:8000 --link webshopdb -d isa/webshop
+docker run --name webshop -p 8000:8000 --link webshopdb -d isa/webshop
 ```
 
 
