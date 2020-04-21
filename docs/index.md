@@ -188,7 +188,105 @@ fajlovi, itd).
 
 ### Konfiguracija za produkciju
 
-TODO: docker build uputstvo i objašnjenje šta će se naći u image-u (multi-stage build...)
+Za potrebe produkcije aplikaciju ćemo upakovati u Docker image. U 
+sastav image-a će ući
+* backend aplikacija u odgovarajućem Python virtuelnom okruženju
+* frontend aplikacija prevedena za produkciju pomoću Angular CLI
+* (uWSGI)[https://uwsgi-docs.readthedocs.io/] server koji će 
+  servirati statičke fajlove frontenda i backenda direktno, a API
+  pozive backendu će prosleđivati Django aplikaciji.
+
+uWSGI server se instalira na nivou operativnog sistema koji se
+koristi u Docker image-u. Konfiguracioni fajl za uWSGI server
+nalazi se u `backend/config/uwsgi-prod.ini`. Najvažniji parametri
+ovog fajla su sledeći:
+```
+check-static=/app/frontend/dist
+static-index=index.html
+route-if=startswith:${PATH_INFO};/activate continue:
+route-if=startswith:${PATH_INFO};/api continue:
+route-if=startswith:${PATH_INFO};/swagger continue:
+route-if=startswith:${PATH_INFO};/redoc continue:
+route-if=startswith:${PATH_INFO};/admin continue:
+route-if=regexp:${PATH_INFO};^/static(.*) static:/app/staticcollected$1
+route-if-not=exists:/app/frontend/dist${PATH_INFO} static:/app/frontend/dist/
+```
+
+U gornjim redovima naznačeno je da se statički sadržaji nalaze u
+folderu `/app/frontend/dist`, da se putanje koje počinju sa 
+`/activate`, `/api`, `/swagger`, `/redoc`, `/admin` prosleđuju na
+backend, da se putanje koje počinju sa `/static` serviraju iz foldera
+`/app/staticcollected` a da se za sve statičke fajlove koji ne
+postoje u `/app/frontend/dist` servira početni fajl (`index.html`).
+
+Na ovaj način će uWSGI server, na osnovu dobijene putanje u HTTP 
+zahtevu, umeti da određene zahteve opsluži slanjem statičkih sadržaja
+u fajl sistemu, a ostale zahteve da upućuje na backend.
+
+Program koji pokreće server u produkciji je u skriptu 
+`backend/run_prod.sh`. U njemu se postavlja vrednost promenljive
+okruženja `DJANGO_SETTINGS` na vrednost `prod`, što je podatak
+koji će pokupiti Django aplikacija i podesiti svoju konfiguraciju
+prema njemu. Zatim se pokreće skript za migriranje šeme baze
+podataka (ako je potrebno), skript za punjenje demo podataka u 
+bazu (nije nužno za produkcione sisteme, ali je ovde ostavljeno
+kao ilustracija) i, na kraju, pokreće uWSGI server sa svojim
+konfiguracionim fajlom.
+
+Putanje koje se nalaze u ovom skriptu i uWSGI konfiguraciji 
+podrazumevaju raspored fajlova u fajl-sistemu Docker image-a, a ne
+servera-domaćina. Izgradnja image-a je definisana u fajlu 
+`Dockerfile`. U našem slučaju, u pitanju je tzv. multi-stage build,
+proces koji se sastoji od pravljenja više image-a, gde će poslednji
+napravljeni image biti rezultat, a prethodni će samo služiti da se
+pomoću njih izgradi završni.
+
+Izgradnja počinje od image-a `node:13.12.0-alpine`, tj. Alpine 
+Linux-a sa instaliranim Node.js u verziji 13.12. Ovaj image će nam
+poslužiti samo za prevođenje Angular aplikacije u produkcioni oblik.
+U fajl-sistemu image-a kreira se folder `/app`, zatim u njega 
+kopiraju fajlovi `frontend/package.json` i 
+`frontend/package-lock.json`, a onda pokreće instalacija svih
+potrebnih JavaScript biblioteka komandom `npm install`. Zatim se
+kopiraju fajlovi Angular projekta i pokreće njihovo prevođenje za
+produkciju gde će rezultat biti smešten u folder 
+`/app/angular-app/dist/`. Ovaj folder je zapravo jedino što će nam
+biti potrebno za kreiranje narednog image-a.
+
+Naredni image će se kreirati polazeći od Alpine Linuxa u verziji 3.11
+uz dodatne biblioteke potrebne za izvršavanje našeg backenda. U toku
+ovog postupka kopiraju se fajlovi iz prethodnog image-a i smeštaju u
+folder `/app/frontend/dist` (tamo gde će uWSGI server očekivati da ih
+pronađe). Prikupljaju se svi statički fajlovi Django aplikacija
+(operacija `collectstatic`), deklariše da će server koristiti TCP
+port 8000 i navodi koji program se pokreće u okviru kontejnera (to je
+skript `run_prod.sh`).
+
+Da bi kontejner sa ovakvom aplikacijom mogao da pristupi bazi 
+podataka koja će biti u drugom kontejneru, mora postojati način da se
+našem serveru saopšte parametri potrebni za vezu sa PostgreSQL bazom
+podataka. Django konfiguracija za produkciju, data u fajlu
+`backend/webshop/app_settings/prod.py`, će proveriti postojanje
+promenljivih okruženja sa ovim podešavanjima i usvojiti podrazumevane
+vrednosti u slučaju da one nisu definisane. U pitanju su sledeće
+promenljive:
+* `POSTGRES_HOST`
+* `POSTGRES_PORT`
+* `POSTGRES_DBNAME`
+* `POSTGRES_USER`
+* `POSTGRES_PASSWORD`
+
+Za produkciju je potrebno definisati još dve promenljive okruženja,
+`SECRET_KEY` i `EMAIL_HOST_PASSWORD`. Ove vrednosti ne bi trebalo da
+stoje u repozitorijumu izvornog koda.
+
+Pokretanje aplikacije iz Docker kontejnera na razvojnom računaru bi
+moglo da se sprovede na sledeći način (koriste se podrazumevane
+vrednosti parametara za povezivanje sa bazom):
+```bash
+docker run --name webshopdb -e POSTGRES_USER=webshop -e POSTGRES_PASSWORD=webshop -d postgres:12.2
+docker run --name webshop -p 8000:8000 --link webshopdb -d isa/webshop
+```
 
 ## Backend
 
@@ -222,8 +320,6 @@ mada se i to može uraditi na sledeći način (primer je za bash shell):
 export DJANGO_SETTINGS=dev
 python manage.py runserver
 ```
-
-TODO: SECRET_KEY, učitavanje iz fajla ili okruženja u produkciji
 
 ### Model podataka
 
@@ -485,4 +581,22 @@ TODO: Layout fajlova u image-u.
 
 ## Oblak
 
-TODO
+Registruj se i prijavi se na Docker Hub. Opciono: Povezi Docker Hub i GitHub. Na Docker Hubu kreiraj novi repozitorijum i povezi ga sa github repozitorijumom, pokreni build na svaki push na master granu.
+
+```bash
+docker login --username=brankomilosavljevic
+docker build -t webshop:latest .
+docker tag webshop:latest brankomilosavljevic/webshop:latest
+docker push brankomilosavljevic/webshop:latest
+```
+
+Registruj se na DigitalOcean. Kreiraj API token.
+
+Kreiraj Postgres bazu, pa zatim kreiraj Docker droplet, kroz GUI ili kroz API:
+```bash
+curl -X POST \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer '$TOKEN'' \
+  -d '{"name":"webshop","region":"nyc1","size":"s-1vcpu-1gb","image":"docker-18-04"}' \
+  "https://api.digitalocean.com/v2/droplets"
+```

@@ -51,6 +51,10 @@ export class PaymentComponent implements OnInit {
       }, (errors) => {
         this.uiService.spin.next(false);
         this.formSubmitted = false;
+        const snackBarRef = this.snackBar.open('Purchase unsuccessful!', 'OK');
+        snackBarRef.afterDismissed().subscribe(() => {
+          this.router.navigate(['/cart']);
+        });
         console.log(errors);
       });
     } else {

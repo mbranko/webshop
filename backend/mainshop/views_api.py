@@ -5,6 +5,7 @@ import smtplib
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.db import transaction
 from django.db.models import Sum
 from django.utils import timezone
 import django_filters
@@ -136,7 +137,6 @@ def register(request):
     responses={
        201: 'Purchase order created',
        404: 'Not enough items available',
-       409: 'Optimistic lock: other client updated the same product',
        400: 'Invalid content in request',
        500: 'Internal server error',
     })
@@ -148,19 +148,15 @@ def purchase(request):
         for order_item in request.data['items']:
             pid = order_item['productID']
             quantity = order_item['quantity']
-            product = Product.objects.get(id=pid)
-            if product.available_quantity >= quantity:
-                product.available_quantity -= quantity
-                product.save()
-                cart_item = ShoppingCartItem(cart=cart, product=product, quantity=quantity)
+            success = acquire_quantity(pid, quantity)
+            if success:
+                cart_item = ShoppingCartItem(cart=cart, product=Product.objects.get(id=pid), quantity=quantity)
                 cart_item.save()
             else:
+                transaction.rollback()
                 return Response(status=status.HTTP_404_NOT_FOUND)
         logger.info(f'Recorded purchase for: {request.user.email}')
         return Response(status=status.HTTP_201_CREATED)
-    except RecordModifiedError:
-        logger.warning('Optimistic lock!!!')
-        return Response(status=status.HTTP_409_CONFLICT)
     except Product.MultipleObjectsReturned:
         logger.fatal(f'Multiple products found for ID: {pid}')
         return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -170,6 +166,30 @@ def purchase(request):
     except KeyError:
         logger.fatal(f'Invalid request data: {request.data}')
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+def acquire_quantity(product_id, quantity):
+    """
+    Pokusava da zauzme quantity kolicinu proizvoda uz optimisticku
+    proveru. Ukoliko je druga transakcija izmenila ovaj proizvod
+    u medjuvremenu, pokusava ponovo sve dok ne uspe da zauzme
+    potrebnu kolicinu proizvoda ili ustanovi da nema dovoljne kolicine.
+
+    :param product_id identifikator proizvoda
+    :param quantity trazena kolicina
+    :return True ako je proizvod zauzet, False ako nema dovoljno
+    """
+    while True:
+        try:
+            product = Product.objects.get(id=product_id)
+            if product.available_quantity >= quantity:
+                product.available_quantity -= quantity
+                product.save()
+                return True
+            else:
+                return False
+        except RecordModifiedError:
+            logger.warning(f'Optimistic lock for product ID: {product_id}')
 
 
 @swagger_auto_schema(
