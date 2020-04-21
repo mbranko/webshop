@@ -6,9 +6,9 @@ funkcionisanja webshop aplikacije.
 ## Osnovni elementi arhitekture
 
 Aplikacija se sastoji od zadnjeg dela (implementiranog u Pajtonu
-pomoću (Django)[https://www.djangoproject.com/] radnog okvira) i
-prednjeg dela ((TypeScript)[https://www.typescriptlang.org/] i
-(Angular)[https://angular.io/] radni okvir). Relaciona baza podataka
+pomoću [Django](https://www.djangoproject.com/) radnog okvira) i
+prednjeg dela ([TypeScript](https://www.typescriptlang.org/) i
+[Angular](https://angular.io/) radni okvir). Relaciona baza podataka
 se koristi za trajno skladištenje.
 
 Frontend komunicira sa backendom putem REST API-ja. Za neke URL
@@ -60,9 +60,9 @@ Sledeće putanje se obrađuju na backendu:
 * `/api/most-popular-products/`: lista 6 najprodavanijih proizvoda
 * `/admin/`: *Django admin* korisnički interfejs za uređivanje 
   podataka u bazi
-* `/swagger/`: dokumentacija za API u (Swagger)[https://swagger.io/] 
+* `/swagger/`: dokumentacija za API u [Swagger](https://swagger.io/)
   formatu
-* `/redoc/`: dokumentacija za API u (ReDoc)[https://redoc.ly/] 
+* `/redoc/`: dokumentacija za API u [ReDoc](https://redoc.ly/) 
   formatu
 
 ### Konfiguracija za razvoj
@@ -71,10 +71,10 @@ Razvojna konfiguracija sistema se sastoji iz sledećeg:
 
 * SQLite baze podataka, koja koristi fajl `/backend/db.sqlite3`
 * backend servera implementiranog pomoću Django i 
-  (DRF)[https://www.django-rest-framework.org/] (Django REST
+  [DRF](https://www.django-rest-framework.org/) (Django REST
   Framework) okvira
-* frontend servera implementiranog pomoću (Angular 
-  CLI)[https://cli.angular.io/]
+* frontend servera implementiranog pomoću [Angular 
+  CLI](https://cli.angular.io/)
 
 Ukoliko fajl koji koristi baza podataka ne postoji, biće automatski
 kreiran. Za pokretanje backenda potrebno je prvo kreirati Pajton
@@ -108,7 +108,7 @@ python manage.py test
 ```
 
 Za pokretanje frontend servera potrebno je prethodno instalirati 
-(Node.js)[https://nodejs.org/] i sve neophodne biblioteke:
+[Node.js](https://nodejs.org/) i sve neophodne biblioteke:
 
 ```bash
 cd frontend
@@ -192,7 +192,7 @@ Za potrebe produkcije aplikaciju ćemo upakovati u Docker image. U
 sastav image-a će ući
 * backend aplikacija u odgovarajućem Python virtuelnom okruženju
 * frontend aplikacija prevedena za produkciju pomoću Angular CLI
-* (uWSGI)[https://uwsgi-docs.readthedocs.io/] server koji će 
+* [uWSGI](https://uwsgi-docs.readthedocs.io/) server koji će 
   servirati statičke fajlove frontenda i backenda direktno, a API
   pozive backendu će prosleđivati Django aplikaciji.
 
