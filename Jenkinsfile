@@ -1,7 +1,7 @@
 #!/usr/bin/groovy
 pipeline {
-  //agent { label 'master' }
-  agent { docker { image 'python:3.7.7' } }
+//   agent { label 'master' }
+//   agent { docker { image 'python:3.7.7' } }
   stages {
     stage('checkout code') {
       steps {
