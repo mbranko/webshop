@@ -76,34 +76,34 @@ class RegistrationTests(TestCase):
     def test_unauthenticated(self):
         c = Client()
         response = c.post('/api/register/', data=self.good_request, content_type='application/json')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
 
     def test_wrong_method(self):
         c = Client()
         response = c.get('/api/register/')
-        self.assertEquals(response.status_code, 405)
+        self.assertEqual(response.status_code, 405)
 
     def test_missing_field(self):
         c = Client()
         response = c.post('/api/register/', data=self.bad_request_missing_field, content_type='application/json')
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(response.status_code, 400)
 
     def test_bad_email(self):
         c = Client()
         response = c.post('/api/register/', data=self.bad_request_bad_email, content_type='application/json')
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(response.status_code, 400)
 
     def test_empty_field(self):
         c = Client()
         response = c.post('/api/register/', data=self.bad_request_empty_field, content_type='application/json')
-        self.assertEquals(response.status_code, 400)
+        self.assertEqual(response.status_code, 400)
 
     def test_registration_must_return_activation_link(self):
         c = Client()
         response = c.post('/api/register/', data=self.good_request, content_type='application/json')
         try:
             activation_link = response.data['activation_link']
-            self.assertEquals(response.status_code, 200)
+            self.assertEqual(response.status_code, 200)
         except KeyError:
             self.fail('activation_link not found in response')
 
@@ -112,34 +112,34 @@ class RegistrationTests(TestCase):
         response = c.post('/api/register/', data=self.good_request, content_type='application/json')
         activation_link = response.data['activation_link']
         response = c.get(f'/activate/{activation_link}/')
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
         status, token, customer_id = authenticate(self, c, self.good_request['email'], self.good_request['password'])
-        self.assertEquals(status, 200)
+        self.assertEqual(status, 200)
         response = c.get(f'/api/customers/{customer_id}/', HTTP_AUTHORIZATION=f'JWT {token}')
-        self.assertEquals(response.status_code, 200)
-        self.assertEquals(response.data['id'], customer_id)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['id'], customer_id)
 
     def test_login_fails_with_wrong_password(self):
         c = Client()
         status, token, customer_id = authenticate(self, c, self.customer_1.user.email, '6adP4ssW0rd')
-        self.assertEquals(status, 400)
+        self.assertEqual(status, 400)
 
     def test_cannot_login_without_activation(self):
         c = Client()
         response = c.post('/api/register/', data=self.good_request, content_type='application/json')
         status, token, customer_id = authenticate(self, c, self.good_request['email'], self.good_request['password'])
-        self.assertNotEquals(status, 200)
+        self.assertNotEqual(status, 200)
 
     def test_not_allowed_to_read_another_customer(self):
         c = Client()
         status_1, token_1, customer_id_1 = authenticate(self, c, self.customer_1.user.email, self.customer_1.password)
-        self.assertEquals(status_1, 200)
+        self.assertEqual(status_1, 200)
         status_2, token_2, customer_id_2 = authenticate(self, c, self.customer_2.user.email, self.customer_2.password)
-        self.assertEquals(status_1, 200)
+        self.assertEqual(status_1, 200)
 
         # try to read data on customer #2 while logged in as customer #1
         response = c.get(f'/api/customers/{customer_id_2}/', HTTP_AUTHORIZATION=f'JWT {token_1}')
-        self.assertEquals(response.status_code, 403)
+        self.assertEqual(response.status_code, 403)
 
     def not_now_test_register_throttle(self):
         c = Client()
@@ -178,14 +178,14 @@ class PurchaseTests(TestCase):
         status_1, token_1, customer_id_1 = authenticate(self, c, self.customer_1.user.email, self.customer_1.password)
         req = {'items': [{'productID': self.prod1.id, 'quantity': 1}]}
         response = c.post('/api/purchase/', data=req, HTTP_AUTHORIZATION=f'JWT {token_1}', content_type='application/json')
-        self.assertEquals(response.status_code, 201)
+        self.assertEqual(response.status_code, 201)
 
     def test_purchase_not_enough(self):
         c = Client()
         status_1, token_1, customer_id_1 = authenticate(self, c, self.customer_1.user.email, self.customer_1.password)
         req = {'items': [{'productID': self.prod1.id, 'quantity': 25}]}
         response = c.post('/api/purchase/', data=req, HTTP_AUTHORIZATION=f'JWT {token_1}', content_type='application/json')
-        self.assertEquals(response.status_code, 404)
+        self.assertEqual(response.status_code, 404)
 
     def test_purchase_optimistic_lock(self):
         p1 = Product.objects.get(id=1)

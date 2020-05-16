@@ -143,6 +143,7 @@ def register(request):
 @api_view(['POST'])
 def purchase(request):
     try:
+        sid = transaction.savepoint()
         cart = ShoppingCart(customer=request.user.customer, order_date=timezone.now())
         cart.save()
         for order_item in request.data['items']:
@@ -153,7 +154,7 @@ def purchase(request):
                 cart_item = ShoppingCartItem(cart=cart, product=Product.objects.get(id=pid), quantity=quantity)
                 cart_item.save()
             else:
-                transaction.rollback()
+                transaction.savepoint_rollback(sid)
                 return Response(status=status.HTTP_404_NOT_FOUND)
         logger.info(f'Recorded purchase for: {request.user.email}')
         return Response(status=status.HTTP_201_CREATED)
