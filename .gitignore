@@ -132,3 +132,4 @@ dmypy.json
 webshop.log
 node_modules/
 frontend/dist/
+junit.xml

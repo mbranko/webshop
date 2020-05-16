@@ -197,6 +197,9 @@ class PurchaseTests(TestCase):
             p2.save()
             self.assertTrue('Record has been modified' in str(context.exception))
 
+    def test_always_fail(self):
+        self.assertTrue(False)
+
 
 def authenticate(test_case, client, username, password):
     """
