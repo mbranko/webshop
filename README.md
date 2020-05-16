@@ -69,5 +69,3 @@ Pokretanje aplikacije:
 ```bash
 docker run --name webshop -p 8000:8000 --link webshopdb -d isa/webshop
 ```
-
-
